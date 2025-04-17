@@ -154,10 +154,10 @@ function updateCartQuantity() {
 
   // Step 8: Put the quantity on the page using the DOM
   document.querySelector('.js-cart-quantity')
-      .innerHTML = cartQuantity;
+    .innerHTML = cartQuantity;
 
-  console.log(cartQuantity);
-  // console.log(cart)
+  // console.log(cartQuantity);
+  // console.log(cart);
 }
 
 document.querySelectorAll('.js-add-to-cart')
