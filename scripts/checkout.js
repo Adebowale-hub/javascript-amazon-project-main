@@ -27,7 +27,7 @@ cart.forEach((cartItem) => {
     });
     // console.log(matchingProduct); 
 
-
+ 
     // Store the generated HTML into the variable to appear (use of the accumulation pattern '+=')
     cartSummaryHTML +=`
         <div class="cart-item-container">
