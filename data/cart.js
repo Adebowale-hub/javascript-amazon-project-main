@@ -6,7 +6,7 @@
 // Export the cart
 // To make the checkout page interactive
 // Checkout Page Step 1: Create inside the cart some default values
-export const cart = [
+export let cart = [
     {
         productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
         quantity: 1,
@@ -42,7 +42,7 @@ export function addToCart(productId) {
     }
 }
 
-function removeFromCart(productId) {
+export function removeFromCart(productId) {
    const newCart = [];
 
    cart.forEach((cartItem) => {
@@ -51,4 +51,6 @@ function removeFromCart(productId) {
        newCart.push(cartItem);    
     }
    });
+
+   cart = newCart;
 }
