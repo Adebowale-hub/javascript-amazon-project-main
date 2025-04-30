@@ -16,6 +16,8 @@ import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js'; 
 import { formatCurrency } from './utils/money.js';
 
+// hello();
+
 // Step 1: Save the data
 // This is called a data structure.
 /* const products = [
