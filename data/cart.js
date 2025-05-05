@@ -7,21 +7,29 @@
 // To make the checkout page interactive
 // Checkout Page Step 1: Create inside the cart some default values
 
-// Get the cart from the local Storage instead of using default values.
-export let cart = JSON.parse(localStorage.getItem('cart'));
+export let cart;
 
-if (!cart) {
-    // Use Default values for products in the cart array to avoid null : export let cart = [];
-    cart = [
-        // {
-        //     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-        //     quantity: 1,
-        // },
-        // {
-        //     productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-        //     quantity: 1
-        // }
-    ];
+loadFromStorage();
+
+export function loadFromStorage() {
+    // Get the cart from the local Storage instead of using default values.
+    cart = JSON.parse(localStorage.getItem('cart'));
+
+    if (!cart) {
+        // Use Default values for products in the cart array to avoid null : export let cart = [];
+        cart = [
+            {
+                productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+                quantity: 1,
+                deliveryOptionId: '1'
+            },
+            {
+                productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
+                quantity: 1,
+                deliveryOptionId: '3'
+            }
+        ];
+    }
 }
 
 
@@ -51,7 +59,8 @@ export function addToCart(productId) {
         // console.log('Affiche something');
         cart.push({
             productId: productId,
-            quantity: 1
+            quantity: 1,
+            deliveryOptionsId: '1'
         });
         // console.log(cart.length);
     }
@@ -73,4 +82,18 @@ export function removeFromCart(productId) {
 
    // Remove function finished and save to the local storage
    saveToStorage();
+}
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem;
+
+  cart.forEach((cartItem) => {
+    if (productId === cartItem.productId) {
+      matchingItem = cartItem;
+    }
+  });
+
+  matchingItem.deliveryOptionId = deliveryOptionId;
+
+  saveToStorage();
 }
