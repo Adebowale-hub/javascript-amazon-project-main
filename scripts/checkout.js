@@ -17,9 +17,8 @@ import {deliveryOptions, getDeliveryOption} from '../data/deliveryOptions.js';
 
 // console.log(dayjs());
 
-
-
-// After combining the HTML together, 
+function renderOrderSummary() {
+  // After combining the HTML together, 
 // let's create a variable appear to store the result
 let cartSummaryHTML = '';
 
@@ -161,12 +160,19 @@ document.querySelectorAll('.js-delete-link')
             // console.log(container);
             container.remove();
         });
-
+        
+        // Change the delivery option when it's 'clicked'
         document.querySelectorAll('.js-delivery-option')
             .forEach((element) => {
               element.addEventListener('click', () => {
                 const {productId, deliveryOptionId} = element.dataset;
                 updateDeliveryOption(productId, deliveryOptionId);
+                // Update the delivery date without needing to refresh the page when change the delivery option 
+                // A function can call / re-run itself that's call -> recursion
+                renderOrderSummary();
               });
             });
     });
+}
+
+renderOrderSummary();
