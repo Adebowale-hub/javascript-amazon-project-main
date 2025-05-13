@@ -5,7 +5,7 @@
 
 // Checkout Page Step 2: Generate the HTML
 import { cart, removeFromCart, updateDeliveryOption } from '../../data/cart.js';
-import {products, getProduct} from '../../data/products.js';
+import { products, getProduct } from '../../data/products.js';
 import formatCurrency from '../utils/money.js'; 
 
 // import external librairies (dayjs) with JavaScript modules; Module always start with the word export and to use it, you need to import it.

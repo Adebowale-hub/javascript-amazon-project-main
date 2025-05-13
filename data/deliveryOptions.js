@@ -22,6 +22,6 @@ export const deliveryOptions = [{
         deliveryOption = option;
       }
     });
-  
+    // Set the delivery option or select the default value
     return deliveryOption || deliveryOptions[0];
   }
