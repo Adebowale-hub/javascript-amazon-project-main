@@ -91,5 +91,5 @@ export function renderPaymentSummary() {
 
     // Change the HTML and replace it by the HTML created by the JavaScript paymentSummaryHTML
     document.querySelector('.js-payment-summary')
-      .innerHTML = paymentSummaryHTML;
+      .innerHTML = paymentSummaryHTML;   
 }

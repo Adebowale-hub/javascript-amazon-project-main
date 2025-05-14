@@ -11,11 +11,13 @@ import formatCurrency from '../utils/money.js';
 // import external librairies (dayjs) with JavaScript modules; Module always start with the word export and to use it, you need to import it.
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
-
+import { renderPaymentSummary } from './paymentSummary.js';
 // import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 // hello();
-
 // console.log(dayjs());
+// const today = dayjs();
+// const deliveryDate = today.add(7, 'days');
+// console.log(deliveryDate.format('dddd, MMMM D'));
 
 export function renderOrderSummary() {
   // After combining the HTML together, 
@@ -159,6 +161,8 @@ document.querySelectorAll('.js-delete-link')
             );
             // console.log(container);
             container.remove();
+            // Update the data and regenerate the HTML payment summary 
+            renderPaymentSummary();
         });
         
         // Change the delivery option when it's 'clicked'
@@ -174,6 +178,8 @@ document.querySelectorAll('.js-delete-link')
                 // - View (View takes the data and display it on a page.) 
                 // - Controller (Controller runs some code which interact with a page and update the Model)
                 renderOrderSummary();
+                // Regenerate the HTML by changing the delivery option
+                renderPaymentSummary(); 
               });
             });
     });
