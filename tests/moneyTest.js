@@ -1,7 +1,8 @@
 import { formatCurrency } from '../scripts/utils/money.js';
 
-// 1. Manual Tests
+// 1. Manual Tests -> By opening the Website in the Browser
 // 2. Automated Tests = using code to test code
+// https://github.com/jasmine/jasmine/releases
 
 // How many test cases should we have ?
 // 1. Basic test cases = tests if the code is working.
