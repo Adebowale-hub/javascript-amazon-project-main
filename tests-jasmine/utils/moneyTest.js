@@ -1,4 +1,4 @@
-import { formatCurrency } from '../scripts/utils/money.js';
+import { formatCurrency } from '../../scripts/utils/money.js';
 
 // 1. Manual Tests -> By opening the Website in the Browser
 // 2. Automated Tests = using code to test code
