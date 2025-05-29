@@ -34,7 +34,7 @@ export function loadFromStorage() {
 
 
 
-// Save our cart to the local storage and don4t need to reset or to refresh the page.
+// Save our cart to the local storage and don't need to reset or to refresh the page.
 function saveToStorage() {
     // What we want to save = 'cart' and convert it into a string 
     localStorage.setItem('cart', JSON.stringify(cart));
