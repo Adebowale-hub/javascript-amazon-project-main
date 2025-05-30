@@ -17,19 +17,21 @@
 class Cart {
     // Add property to a class so that every object created with this class will have this property.
     cartItems; // cartItems; means -> cartItems = undefined;
-    localStorageKey; // localStorageKey; means -> localStorageKey = undefined;
+    // #localStorageKey private property or private field
+    #localStorageKey; // localStorageKey; means -> localStorageKey = undefined; 
+    // and # is to make localStorageKey private
 
     // The constructor setup the objects
     constructor(localStorageKey) {
         // Set the property called localStorageKey
-        this.localStorageKey = localStorageKey;
-        this.loadFromStorage();
+        this.#localStorageKey = localStorageKey;
+        this.#loadFromStorage();
     }
 
     // Add some Methods to the Cart Class  
     // Add loadFromStorage method to this class
     // loadFromStorage : function() -> loadFromStorage()
-    loadFromStorage() {
+    #loadFromStorage() {
             // Get the cart from the local Storage instead of using default values.
             this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey));
 
@@ -53,7 +55,7 @@ class Cart {
     // Add a method to Save our cart to the local storage and don't need to reset or to refresh the page.
     saveToStorage() {
     // What we want to save = 'cart' and convert it into a string 
-    localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+    localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
     }
 
     // Step 9: Create a Function to add products in the cart
@@ -120,6 +122,7 @@ class Cart {
 const cart = new Cart('cart-oop');
 const businessCart = new Cart('cart-business');
 
+// cart.#localStorageKey = 'test';
 
 console.log(cart);
 console.log(businessCart);
