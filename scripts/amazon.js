@@ -107,6 +107,8 @@ products.forEach((product) => {
               <option value="10">10</option>
             </select>
           </div>
+          
+          ${product.extraInfoHTML()}
 
           <div class="product-spacer"></div>
 
@@ -174,3 +176,14 @@ document.querySelectorAll('.js-add-to-cart')
             updateCartQuantity();          
         });
     })
+
+// Polymorphism = use a method without knowing the class -> Here Product vs Clothing
+// ${product.extraInfoHTML()}
+
+/* 
+${
+  product instanceof Clothing
+    ? <a href="${product.sizeChartLink}">Size chart</a>
+    : ''
+} 
+*/
