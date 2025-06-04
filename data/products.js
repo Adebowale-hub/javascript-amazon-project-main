@@ -75,19 +75,21 @@ class Clothing extends Product {
 //     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
 //     name: "Adults Plain Cotton T-Shirt - 2 Pack",
 //     rating: {
-//       stars: 4.5,
-//       count: 56
-//     },
-//     priceCents: 799,
-//     keywords: [
-//       "tshirts",
-//       "apparel",
-//       "mens"
-//     ],
-//     type: "clothing",
-//     sizeChartLink: "images/clothing-size-chart.png"
-//   },);
-
+  //       stars: 4.5,
+  //       count: 56
+  //     },
+  //     priceCents: 799,
+  //     keywords: [
+    //       "tshirts",
+    //       "apparel",
+    //       "mens"
+    //     ],
+    //     type: "clothing",
+    //     sizeChartLink: "images/clothing-size-chart.png"
+    //   },);
+    
+    // console.log(tshirt);
+    // console.log(tshirt.getPrice());
 /* 
 //Setup each object to a product class manually
 const product1 = new Product({
@@ -107,7 +109,47 @@ const product1 = new Product({
   });
 console.log(product1); */
 
-// .map((productDetails) => {}) Loops in the array and transfoms each value of the array into a product class
+// Built-in classes
+// new Date() = generates an object that represents the current date
+// const date = new Date();
+// console.log(date);
+// .toLocaleTimeString() -> gives us the current time
+// console.log(date.toLocaleTimeString());
+
+// "this" lets an object access its own properties
+/* console.log(this);
+
+const object2 = {
+  a: 2,
+  b: this.a
+}; */
+
+/* function logThis() {
+  console.log(this);
+}
+logThis();
+logThis.call('Hello');
+
+// Arrow functions do not change the value of "this"
+this
+const object3 = {
+  method: () => {
+    console.log(this);
+
+    [1, 2, 3, 4].forEach(() => {
+      console.log(this);
+    });
+  }
+};
+object3.method();
+ */
+// Summary of "this" 
+// 1. Inside a method, "this" points to the outer object 
+// 2 Inside a function, this = undefined 
+// But we can change it. 
+// 3. Arrow functions, do not change the value of "this".
+
+// .map((productDetails) => {}) Loops in the array and transforms each value of the array into a product class
 export const products = [
   // Also export products.js as a module
   {
@@ -776,6 +818,4 @@ export const products = [
   return new Product(productDetails);
 });
 
-console.log(tshirt);
-console.log(tshirt.getPrice());
 // console.log(products);
