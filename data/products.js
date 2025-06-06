@@ -142,7 +142,35 @@ const object3 = {
   }
 };
 object3.method();
- */
+*/
+
+export let products = [];
+
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    // Convert the response into JavaScript Object and load the products into the empty products array
+    // With .map transforms the array of products into products and clothing classes 
+    products = JSON.parse(xhr.response).map((productDetails) => {
+    if(productDetails.type === 'clothing') {
+    // Create new clothing product with the constructor(product's details)
+    return new Clothing(productDetails);
+    }
+    return new Product(productDetails);
+    });
+
+    console.log('load products');
+
+    fun();s
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+}
+
+loadProducts();
+
 // Summary of "this" 
 // 1. Inside a method, "this" points to the outer object 
 // 2 Inside a function, this = undefined 
@@ -150,6 +178,7 @@ object3.method();
 // 3. Arrow functions, do not change the value of "this".
 
 // .map((productDetails) => {}) Loops in the array and transforms each value of the array into a product class
+/* Load products from a local storage -> Local JSON File 
 export const products = [
   // Also export products.js as a module
   {
@@ -816,6 +845,6 @@ export const products = [
     return new Clothing(productDetails);
   }
   return new Product(productDetails);
-});
+}); */
 
 // console.log(products);
