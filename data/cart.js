@@ -23,22 +23,22 @@ export function addToCart(productId) {
     // Create the variable to match the selected product with the productId 
     let matchingItem;
     
+    
     // Loop throw the products and add them 
     cart.forEach((item) => {
         if (productId === item.productId) {
             matchingItem = item;
         }
     });
-    //console.log(matchingItem);
+    // console.log(matchingItem);
 
     if (matchingItem) {
-        matchingItem.quantity += 1;
+        // Sort the items and make their total and also the total of all items
+        matchingItem.quantity += Number(document.querySelector(`.js-quantity-selector-${productId}`).value);
     } else {
-        // console.log('Affiche something');
         cart.push({
             productId: productId,
-            quantity: 1
+            quantity: Number(document.querySelector(`.js-quantity-selector-${productId}`).value)
         });
-        console.log(cart);
     }
 }
