@@ -11,6 +11,7 @@
 /* import * as cartModule from '../data/cart.js;
 cartModule.cart
 cartModule.addToCart('id'); */ 
+// Modules only works with Live Server
 import { cart, addToCart } from '../data/cart.js';
 
 import { products } from '../data/products.js'; 
@@ -56,6 +57,7 @@ import { products } from '../data/products.js';
 //     priceCents: 1899
 // },
 // ];
+
 // Step 3: First Create a Variable at the top
 let productsHTML = '';
 
