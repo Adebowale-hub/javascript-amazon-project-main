@@ -7,14 +7,7 @@
 // To make the checkout page interactive
 // Checkout Page Step 1: Create inside the cart some default values
 export const cart = [
-    // {
-    //     productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-    //     quantity: 0,
-    // },
-    // {
-    //     productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-    //     quantity: 1
-    // },
+
 ];
 
 // Step 9: Create a Function to add products in the cart
