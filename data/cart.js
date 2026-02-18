@@ -25,9 +25,9 @@ export function addToCart(productId) {
     
     
     // Loop throw the products and add them 
-    cart.forEach((item) => {
-        if (productId === item.productId) {
-            matchingItem = item;
+    cart.forEach((cartItem) => {
+        if (productId === cartItem.productId) {
+            matchingItem = cartItem;
         }
     });
     // console.log(matchingItem);

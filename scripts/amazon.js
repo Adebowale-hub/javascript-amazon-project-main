@@ -57,7 +57,7 @@ import { products } from '../data/products.js';
 //     priceCents: 1899
 // },
 // ];
-
+ 
 // Step 3: First Create a Variable at the top
 let productsHTML = '';
 
@@ -150,9 +150,9 @@ function updateCartQuantity() {
   // So let's loop throw each object in the array
   // Then calculate the quantity
   let cartQuantity = 0;
-  cart.forEach((item) => {
+  cart.forEach((cartItem) => {
       // Accumulation pattern
-      cartQuantity += item.quantity;
+      cartQuantity += cartItem.quantity;
   });
 
   // Step 8: Put the quantity on the page using the DOM
