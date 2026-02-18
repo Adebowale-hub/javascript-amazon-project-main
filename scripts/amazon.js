@@ -18,44 +18,44 @@ import { products } from '../data/products.js';
 
 // Step 1: Save the data
 // This is called a data structure.
-/* const products = [
-{
-    image: "images/products/athletic-cotton-socks-6-pairs.jpg",
-    name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
-    rating: {
-        stars: 4.5,
-        count: 87
-    },
-    priceCents: 1090
-},
-{
-    image: "images/products/intermediate-composite-basketball.jpg",
-    name: "Intermediate Size Basketball",
-    rating: {
-        stars: 4,
-        count: 127
-    },
-    priceCents: 2095
-},
-{
-    image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-    name: "Adults Plain Cotton T-Shirt - 2 Pack",
-    rating: {
-        stars: 4.5,
-        count: 56
-    },
-    priceCents: 799
-},
-{
-    image: 'images/products/black-2-slot-toaster.jpg',
-    name: '2 Slot Toaster - Black',
-    rating: {
-        stars: 5,
-        count: 2197
-    },
-    priceCents: 1899
-},
-]; */
+// const products = [
+// {
+//     image: "images/products/athletic-cotton-socks-6-pairs.jpg",
+//     name: "Black and Gray Athletic Cotton Socks - 6 Pairs",
+//     rating: {
+//         stars: 4.5,
+//         count: 87
+//     },
+//     priceCents: 1090
+// },
+// {
+//     image: "images/products/intermediate-composite-basketball.jpg",
+//     name: "Intermediate Size Basketball",
+//     rating: {
+//         stars: 4,
+//         count: 127
+//     },
+//     priceCents: 2095
+// },
+// {
+//     image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
+//     name: "Adults Plain Cotton T-Shirt - 2 Pack",
+//     rating: {
+//         stars: 4.5,
+//         count: 56
+//     },
+//     priceCents: 799
+// },
+// {
+//     image: 'images/products/black-2-slot-toaster.jpg',
+//     name: '2 Slot Toaster - Black',
+//     rating: {
+//         stars: 5,
+//         count: 2197
+//     },
+//     priceCents: 1899
+// },
+// ];
 // Step 3: First Create a Variable at the top
 let productsHTML = '';
 
@@ -65,7 +65,7 @@ let productsHTML = '';
 products.forEach((product) => {
     // Step 3: Second save the HTML into the variable productsHTML
     // productsHTML += means productsHTML = productsHTML + 
-    // productsHTML '+=' it's an Accumulation Pattern
+    // productsHTML '+=' it's an Accumulator Pattern
     // Pour les arrondis uitliser la methode toFixed()
     // Delete all the HTML code (amazon.html line 55) for the products
     productsHTML += `
@@ -119,11 +119,12 @@ products.forEach((product) => {
           </button>
         </div>
     `;
+    // console.log(productsHTML);
+    
 })
 
 // Step 3: Combine this HTML together into
 // one string and put it on the web page
-
 
 // Step 4: Take the HTML 
 // And put it on the web page (using the DOM)
@@ -156,7 +157,7 @@ function updateCartQuantity() {
   document.querySelector('.js-cart-quantity')
       .innerHTML = cartQuantity;
 
-  console.log(cartQuantity);
+  // console.log(cartQuantity);
   // console.log(cart)
 }
 
