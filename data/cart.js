@@ -21,11 +21,12 @@ export const cart = [
 // Step 10: Put related code together 
 export function addToCart(productId) {
     // Create the variable to match the selected product with the productId 
-    let matchingItem; 
+    let matchingItem;
+    
     // Loop throw the products and add them 
-    cart.forEach((cartItem) => {
-        if (productId === cartItem.productId) {
-            matchingItem = cartItem;
+    cart.forEach((item) => {
+        if (productId === item.productId) {
+            matchingItem = item;
         }
     });
     //console.log(matchingItem);

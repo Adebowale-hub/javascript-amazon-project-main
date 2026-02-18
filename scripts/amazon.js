@@ -148,15 +148,14 @@ function updateCartQuantity() {
   // So let's loop throw each object in the array
   // Then calculate the quantity
   let cartQuantity = 0;
-  cart.forEach((cartItem) => {
+  cart.forEach((item) => {
       // Accumulation pattern
-      cartQuantity += cartItem.quantity;
+      cartQuantity += item.quantity;
   });
 
   // Step 8: Put the quantity on the page using the DOM
-  document.querySelector('.js-cart-quantity')
-      .innerHTML = cartQuantity;
-
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  
   // console.log(cartQuantity);
   // console.log(cart)
 }
@@ -166,10 +165,10 @@ document.querySelectorAll('.js-add-to-cart')
         button.addEventListener('click', () => {
             // console.log('Added product');
             // 'dataset' récupère l'attribut HTML data attribute 'data-'
-            // console.log(button.dataset.productName);
+            // console.log(button.dataset.productId);
             // Always use the productId because two products with the same name can be saved to the cart. 
             const productId = button.dataset.productId;
             addToCart(productId);
-            updateCartQuantity();          
+            updateCartQuantity(productId);          
         });
     })
