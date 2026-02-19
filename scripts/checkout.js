@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Don't forget the Main Idea of JavaScript
 // 1. Save the data
 // 2. Generate the HTML
@@ -131,3 +132,18 @@ document.querySelectorAll('.js-delete-link')
             container.remove();
         });
     });
+=======
+import { renderOrderSummary } from "./checkout/orderSummary.js";
+import { renderPaymentSummary } from "./checkout/paymentSummary.js";
+import { loadProducts } from "../data/products.js";
+// import '../data/cart-oop.js';
+// import '../data/cart-class.js';
+// import '../data/backend-practice.js';
+
+loadProducts(() => {
+    // console.log(renderOrderSummary());
+    renderOrderSummary();
+    // console.log(renderPaymentSummary());
+    renderPaymentSummary();
+});
+>>>>>>> 38a8d167b8bd99ce2655c39fe84e700eaa37898c
