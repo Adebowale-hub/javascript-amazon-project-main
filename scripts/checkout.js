@@ -4,7 +4,7 @@
 // 3. Make it interactive
 
 // Checkout Page Step 2: Generate the HTML
-// import {cart} from '../data/cart.js';
+import {cart, removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import { formatCurrency } from './utils/money.js'; 
 
@@ -12,20 +12,9 @@ import { formatCurrency } from './utils/money.js';
 // let's create a variable appear to store the result
 let cartSummaryHTML = '';
 
-const cartSummary = [
-    {
-        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-        quantity: 2
-    },
-    {
-        productId: '15b6fc6f-327a-4ec4-896f-486349e85a3d',
-        quantity: 1
-    },
-];
-
 // Checkout Page Step 3: Loop throw the cart and generate the HTML
 // Search for the array for the full products details
-cartSummary.forEach((cartItem) => {
+cart.forEach((cartItem) => {
     const productId = cartItem.productId;
     
     // Create a variable to save the result
@@ -65,7 +54,7 @@ cartSummary.forEach((cartItem) => {
                     <span class="update-quantity-link link-primary">
                     Update
                     </span>
-                    <span class="delete-quantity-link link-primary">
+                    <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
                     Delete
                     </span>
                 </div>
@@ -120,8 +109,18 @@ cartSummary.forEach((cartItem) => {
     `;
 });
 
-console.log(cartSummary);
+console.log(cart);
 
 //  console.log(cartSummaryHTML);
 
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
+
+document.querySelectorAll('.js-delete-link')
+    .forEach((link) => {
+        link.addEventListener('click', () => {
+            // console.log('delete');
+            const productId = link.dataset.productId;
+            removeFromCart(productId);
+            // console.log(cart);
+        });
+    });
