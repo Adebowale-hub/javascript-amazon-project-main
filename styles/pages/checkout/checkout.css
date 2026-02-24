@@ -209,3 +209,10 @@
   margin-top: 11px;
   margin-bottom: 15px;
 }
+
+.quantity-input {
+  width: 37px;
+  padding: 3px;
+  margin-left: 5px;
+  margin-right: 5px;
+}

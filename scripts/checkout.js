@@ -2,6 +2,11 @@ import { cart, removeFromCart, calculateCartQuantity } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js'; 
 
+const today = dayjs();
+const deliveryDate = today.add(7, 'days');
+console.log(deliveryDate);
+
+
 // Step 1: Create the HTML for the order summary based on the products in the cart
 let cartSummaryHTML = '';
 
@@ -21,7 +26,13 @@ cart.forEach((cartItem) => {
                     <div class="product-price">$${formatCurrency(matchingProduct.priceCents)}</div>
                     <div class="product-quantity">
                         <span>Quantity: <span class="quantity-label">${cartItem.quantity}</span></span>
-                        <span class="update-quantity-link link-primary">Update</span>
+                        <span class="update-quantity-link link-primary">
+                            Update
+                            <span>
+                                <input type="number" class="quantity-input js-quantity-input-${matchingProduct.id}" value="${cartItem.quantity}" min="1">
+                            </span>
+                            <span>Save</span>
+                        </span>
                         <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</span>
                     </div>
                 </div>
@@ -35,7 +46,7 @@ cart.forEach((cartItem) => {
 
 // We insert the generated HTML into the order summary container in the checkout page
 document.querySelector('.js-order-summary').innerHTML = cartSummaryHTML;
-// 
+// Step 2: Add event listeners to the delete links to remove products from the cart and update the order summary
 document.querySelectorAll('.js-delete-link').forEach((link) => {
     // We add an event listener to each delete link to remove the product from the cart when clicked
     link.addEventListener('click', () => {
@@ -49,6 +60,25 @@ document.querySelectorAll('.js-delete-link').forEach((link) => {
         calculateCartQuantity();
     });
 });
+
+document.querySelectorAll('.update-quantity-link').forEach((link) => {
+    link.addEventListener('click', () => {
+        const productId = link.closest('.cart-item-container').querySelector('.js-delete-link').dataset.productId;
+        const newQuantity = `<input type="number" class="quantity-input js-quantity-input-${matchingProduct.id}" value="${cartItem.quantity}" min="1">`;
+        if (newQuantity > 0) {
+            const cartItem = cart.find(item => item.productId === productId);
+            cartItem.quantity = newQuantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.querySelector(`.js-cart-item-container-${productId} .quantity-label`).textContent = newQuantity;
+            calculateCartQuantity();
+        } else {
+            console.log(newQuantity);
+            ;
+
+        }
+    });
+});
+
 
 // Initialize cart quantity on load
 calculateCartQuantity();
