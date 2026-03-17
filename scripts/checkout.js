@@ -1,5 +1,5 @@
 import { cart, removeFromCart, calculateCartQuantity, updateQuantity } from "../data/cart.js";
-import { products } from "../data/products.js"; // This is a named export
+import { products } from "../data/products.js"; // This a named export
 import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"; // This is a default export
 import { deliveryOptions } from "../data/deliveryOptions.js";
@@ -81,8 +81,6 @@ document.querySelectorAll(".update-quantity-link").forEach((link) => {
     quantityInput.style.display = "initial"; // Reset display for input
     saveLink.style.display = "initial"; // Reset display for save link
 
-    console.log(productId); // Log the productId to the console
-
     // Add keyboard support for updating
     quantityInput.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
@@ -131,6 +129,13 @@ function validateAndSaveQuantity(cartItemContainer, quantityInput) {
 
   // Update the quantity in the cart
   updateQuantity(productId, newQuantity);
+
+  // Instantly update the displayed quantity in the HTML
+  const quantityLabel = cartItemContainer.querySelector(".quantity-label");
+  quantityLabel.textContent = newQuantity;
+
+  // Update the header cart quantity display
+  calculateCartQuantity();
 }
 
 // Initialize cart quantity on load
