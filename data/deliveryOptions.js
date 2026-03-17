@@ -23,5 +23,5 @@
       }
     });
     // Set the delivery option or select the default value
-    return deliveryOption || deliveryOptions[1]; 
+    return deliveryOption || deliveryOptions[0]; 
   }
