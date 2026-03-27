@@ -4,66 +4,135 @@ import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"; // This is a default export
 import { deliveryOptions } from "../data/deliveryOptions.js";
 
-// Step 1: Create the HTML for the order summary based on the products in the cart
+// ---------- Helpers ----------
+
+function getDeliveryOptionById(optionId) {
+  return deliveryOptions.find((option) => option.id === optionId);
+}
+
+function formatDeliveryDate(deliveryDays) {
+  // Use a fixed "today" once per render so all items in the cart share the same today date.
+  // (You can remove this and call dayjs() inside if you want it to update per item.)
+  const today = dayjs();
+  const deliveryDate = today.add(deliveryDays, "day");
+  return deliveryDate.format("dddd, MMMM D");
+}
+
+// We generate the HTML for delivery options for a given product cart item
+function deliveryOptionsHTML(matchingProduct, cartItem) {
+  const deliveryOptionId = cartItem.deliveryOptionId;
+
+  let html = "";
+
+  deliveryOptions.forEach((option) => {
+    const dateString = formatDeliveryDate(option.deliveryDays);
+
+    const priceString =
+      option.priceCents === 0 ? "FREE" : `$${formatCurrency(option.priceCents)} -`;
+
+    const isChecked = option.id === deliveryOptionId;
+
+    html += `<div class="delivery-option">
+        <input
+          type="radio"
+          ${isChecked ? "checked" : ""}
+          class="delivery-option-input"
+          name="delivery-option-${matchingProduct.id}">
+        <div>
+          <div class="delivery-option-date">
+            ${dateString}
+          </div>
+          <div class="delivery-option-price">
+            ${priceString} Shipping
+          </div>
+        </div>
+      </div>`;
+  });
+
+  return html;
+}
+
+// ---------- Build cart summary HTML ----------
+
 let cartSummaryHTML = "";
 
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
 
-  let matchingProduct = products.find((product) => product.id === productId);
+  const matchingProduct = products.find((product) => product.id === productId);
+  if (!matchingProduct) return; // safety guard
 
-  // We generate the HTML for each product in the cart
+  const deliveryOption = getDeliveryOptionById(cartItem.deliveryOptionId);
+
+  // Fix: dateString must use the selected deliveryOption's deliveryDays
+  const dateString = deliveryOption
+    ? formatDeliveryDate(deliveryOption.deliveryDays)
+    : formatDeliveryDate(0);
+
   cartSummaryHTML += `
-        <div class="cart-item-container js-cart-item-container-${matchingProduct.id}" data-product-id="${productId}">
-            <div class="delivery-date">Delivery date: 21 June</div>
-            <div class="cart-item-details-grid">
-                <img class="product-image" src="${matchingProduct.image}">
-                <div class="cart-item-details">
-                    <div class="product-name">${matchingProduct.name}</div>
-                    <div class="product-price">$${formatCurrency(matchingProduct.priceCents)}</div>
-                    <div class="product-quantity">
-                        <span class="quantity-display">Quantity: <span class="quantity-label">${cartItem.quantity}</span></span>
-                        <span class="update-quantity-link link-primary" data-product-id="${matchingProduct.id}">
-                            Update
-                        </span>
-                        <input type="number" class="quantity-input js-quantity-input-${matchingProduct.id}" value="${cartItem.quantity}" min="1" style="width: 30px; display: none;">
-                        <span class="save-quantity-link link-primary" style="display: none;">Save</span>
-                        <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">Delete</span>
-                    </div>
-                </div>
-                <div class="delivery-options">
-                    <div class="delivery-options-title">
-                    Choose a delivery option:
-                    </div>
-                    ${deliveryOptionsHTML(matchingProduct, cartItem)}
-                </div>
-            </div>
+    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}" data-product-id="${productId}">
+      <div class="delivery-date">Delivery date: ${dateString}</div>
+      <div class="cart-item-details-grid">
+        <img class="product-image" src="${matchingProduct.image}">
+        <div class="cart-item-details">
+          <div class="product-name">${matchingProduct.name}</div>
+          <div class="product-price">$${formatCurrency(matchingProduct.priceCents)}</div>
+          <div class="product-quantity">
+            <span class="quantity-display">
+              Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+            </span>
+            <span class="update-quantity-link link-primary" data-product-id="${matchingProduct.id}">
+              Update
+            </span>
+            <input
+              type="number"
+              class="quantity-input js-quantity-input-${matchingProduct.id}"
+              value="${cartItem.quantity}"
+              min="1"
+              style="width: 30px; display: none;">
+            <span class="save-quantity-link link-primary" style="display: none;">Save</span>
+            <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${matchingProduct.id}">
+              Delete
+            </span>
+          </div>
         </div>
-    `;
+
+        <div class="delivery-options">
+          <div class="delivery-options-title">
+            Choose a delivery option:
+          </div>
+          ${deliveryOptionsHTML(matchingProduct, cartItem)}
+        </div>
+      </div>
+    </div>
+  `;
 });
 
 // We insert the generated HTML into the order summary container in the checkout page
 document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
-// Step 2: Add event listeners to the delete links to remove products from the cart and update the order summary
+// ---------- Delete links ----------
+
 document.querySelectorAll(".js-delete-link").forEach((link) => {
   link.addEventListener("click", () => {
     const productId = link.dataset.productId;
     removeFromCart(productId);
+
     const container = document.querySelector(`.js-cart-item-container-${productId}`);
-    container.remove();
+    if (container) container.remove();
+
     calculateCartQuantity();
   });
 });
 
-// Step 3: Add event listeners to the update links and show input when updating
+// ---------- Update quantity links ----------
+
 document.querySelectorAll(".update-quantity-link").forEach((link) => {
   link.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent any default link behavior
-    const productId = link.dataset.productId; // Get the productId from the data attribute
+    event.preventDefault();
+    const productId = link.dataset.productId;
 
-    // Get the cart item container
-    const cartItemContainer = link.closest('.cart-item-container');
+    const cartItemContainer = link.closest(".cart-item-container");
 
     // Add the class 'is-editing-quantity' to the container
     cartItemContainer.classList.add("is-editing-quantity");
@@ -72,31 +141,31 @@ document.querySelectorAll(".update-quantity-link").forEach((link) => {
     const quantityDisplay = cartItemContainer.querySelector(".quantity-display");
     const updateLink = cartItemContainer.querySelector(".update-quantity-link");
 
-    quantityDisplay.style.display = "none"; // Hide quantity display
-    updateLink.style.display = "none"; // Hide update link
+    quantityDisplay.style.display = "none";
+    updateLink.style.display = "none";
 
     // Display the input and save link
     const quantityInput = cartItemContainer.querySelector(".quantity-input");
     const saveLink = cartItemContainer.querySelector(".save-quantity-link");
-    quantityInput.style.display = "initial"; // Reset display for input
-    saveLink.style.display = "initial"; // Reset display for save link
+
+    quantityInput.style.display = "initial";
+    saveLink.style.display = "initial";
 
     // Add keyboard support for updating
-    quantityInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
+    quantityInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
         validateAndSaveQuantity(cartItemContainer, quantityInput);
       }
     });
   });
 });
 
-// Step 4: Add event listeners to the save links to save the new quantity
+// ---------- Save quantity links ----------
+
 document.querySelectorAll(".save-quantity-link").forEach((link) => {
   link.addEventListener("click", (event) => {
-    event.preventDefault(); // Prevent any default link behavior
-    const cartItemContainer = link.closest('.cart-item-container'); // Get the cart item container
-
-    // Call the function to validate and save quantity
+    event.preventDefault();
+    const cartItemContainer = link.closest(".cart-item-container");
     const quantityInput = cartItemContainer.querySelector(".quantity-input");
     validateAndSaveQuantity(cartItemContainer, quantityInput);
   });
@@ -105,76 +174,37 @@ document.querySelectorAll(".save-quantity-link").forEach((link) => {
 // Function to validate and save the quantity
 function validateAndSaveQuantity(cartItemContainer, quantityInput) {
   const newQuantity = Number(quantityInput.value);
-  const productId = cartItemContainer.dataset.productId; // Get the productId
+  const productId = cartItemContainer.dataset.productId;
 
-  // Validate the new quantity
-  if (newQuantity < 0 || newQuantity >= 1000) {
+  if (Number.isNaN(newQuantity) || newQuantity < 0 || newQuantity >= 1000) {
     alert("Please enter a quantity between 0 and 999.");
     return;
   }
 
-  // Remove the 'is-editing-quantity' class to reverse styles
   cartItemContainer.classList.remove("is-editing-quantity");
 
-  // Hide the input and save link
-  quantityInput.style.display = "none"; // Hide input
+  // Hide input and save link
+  quantityInput.style.display = "none";
   const saveLink = cartItemContainer.querySelector(".save-quantity-link");
-  saveLink.style.display = "none"; // Hide the save link
+  if (saveLink) saveLink.style.display = "none";
 
-  // Show the original quantity display and update link
+  // Show original quantity display and update link
   const quantityDisplay = cartItemContainer.querySelector(".quantity-display");
-  quantityDisplay.style.display = "inline"; // Show quantity display
-  const updateLink = cartItemContainer.querySelector(".update-quantity-link");
-  updateLink.style.display = "inline"; // Show update link
+  if (quantityDisplay) quantityDisplay.style.display = "inline";
 
-  // Update the quantity in the cart
+  const updateLink = cartItemContainer.querySelector(".update-quantity-link");
+  if (updateLink) updateLink.style.display = "inline";
+
+  // Update quantity in the cart
   updateQuantity(productId, newQuantity);
 
-  // Instantly update the displayed quantity in the HTML
+  // Update displayed quantity in the HTML
   const quantityLabel = cartItemContainer.querySelector(".quantity-label");
-  quantityLabel.textContent = newQuantity;
+  if (quantityLabel) quantityLabel.textContent = newQuantity;
 
-  // Update the header cart quantity display
+  // Update header cart quantity display
   calculateCartQuantity();
 }
 
 // Initialize cart quantity on load
 calculateCartQuantity();
-
-function deliveryOptionsHTML(matchingProduct, cartItem) {
-  const deliveryOptionId = cartItem.deliveryOptionId;
-
-  let deliveryOption = deliveryOptions.find(option => option.id === deliveryOptionId);
-
-  let html = "";
-
-  deliveryOptions.forEach((deliveryOption) => {
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
-    const dateString = deliveryDate.format('dddd, MMMM D');
-
-    const priceString = deliveryOption.priceCents === 0
-        ? 'FREE'
-        : `$${formatCurrency(deliveryOption.priceCents)} -`;
-
-    const isChecked = deliveryOption.id === cartItem.deliveryOptionId;
-
-    html += `<div class="delivery-option">
-        <input 
-            type="radio"
-            ${isChecked ? 'checked' : ''}
-            class="delivery-option-input"
-            name="delivery-option-${matchingProduct.id}">
-        <div>
-            <div class="delivery-option-date">
-                ${dateString}
-            </div>
-            <div class="delivery-option-price">
-                ${priceString} - Shipping
-            </div>
-        </div>
-    </div>`;
-  });
-
-  return html;
-}
