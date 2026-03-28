@@ -84,17 +84,9 @@
 
 .products-grid {
   display: grid;
-
-  /* - In CSS Grid, 1fr means a column will take up the
-       remaining space in the grid.
-     - If we write 1fr 1fr ... 1fr; 8 times, this will
-       divide the grid into 8 columns, each taking up an
-       equal amount of the space.
-     - repeat(8, 1fr); is a shortcut for repeating "1fr"
-       8 times (instead of typing out "1fr" 8 times).
-       repeat(...) is a special property that works with
-       display: grid; */
+  gap: 30px;
   grid-template-columns: repeat(8, 1fr);
+  padding-bottom: 60px;
 }
 
 /* @media is used to create responsive design (making the
@@ -146,16 +138,20 @@
 }
 
 .product-container {
-  padding-top: 40px;
-  padding-bottom: 25px;
-  padding-left: 25px;
-  padding-right: 25px;
-
-  border-right: 1px solid rgb(231, 231, 231);
-  border-bottom: 1px solid rgb(231, 231, 231);
-
+  padding: 30px 25px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.product-container:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.08);
 }
 
 .product-image-container {
@@ -212,25 +208,40 @@
 
 .added-to-cart {
   color: rgb(6, 125, 98);
-  font-size: 16px;
-
+  font-size: 15px;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
-
-  /* At first, the "Added to cart" message will
-     be invisible. Use JavaScript to change the
-     opacity and make it visible. */
+  margin-bottom: 12px;
   opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .added-to-cart img {
   height: 20px;
-  margin-right: 5px;
+  margin-right: 6px;
 }
 
 .add-to-cart-button {
   width: 100%;
-  padding: 8px;
+  padding: 12px;
   border-radius: 50px;
+  background: linear-gradient(135deg, #ffd814 0%, #f7ca00 100%);
+  border: none;
+  font-weight: 600;
+  font-size: 15px;
+  color: #0f1111;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(255, 216, 20, 0.2);
+}
+
+.add-to-cart-button:hover {
+  background: linear-gradient(135deg, #f7ca00 0%, #f0c14b 100%);
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(255, 216, 20, 0.4);
+}
+
+.add-to-cart-button:active {
+  transform: scale(0.98);
 }
