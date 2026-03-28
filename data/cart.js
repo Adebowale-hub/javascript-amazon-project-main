@@ -15,7 +15,7 @@ if (!cart) {
     cart = [
         {
             productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
-            quantity: 2, 
+            quantity: 2,
             deliveryOptionId: '1'
         },
         {
@@ -40,7 +40,8 @@ export function addToCart(productId) {
     } else {
         cart.push({
             productId: productId,
-            quantity: Number(document.querySelector(`.js-quantity-selector-${productId}`).value)
+            quantity: Number(document.querySelector(`.js-quantity-selector-${productId}`).value),
+            deliveryOptionId: '1'
         });
     }
     saveToStorage();
@@ -55,7 +56,7 @@ export function removeFromCart(productId) {
 // Step 11: Create a function to calculate the total quantity of products in the cart
 export function calculateCartQuantity() {
     let cartQuantity = cart.reduce((accum, cartItem) => accum + cartItem.quantity, 0);
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity; 
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 }
 
 // Step 12: Create a function to update the quantity of a product

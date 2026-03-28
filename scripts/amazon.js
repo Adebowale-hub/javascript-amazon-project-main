@@ -1,5 +1,5 @@
 import { cart, addToCart, calculateCartQuantity } from '../data/cart.js';
-import { products } from '../data/products.js'; 
+import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 
 // Step 1: Save the data
@@ -7,7 +7,7 @@ let productsHTML = '';
 
 // Step 2: Generate the HTML
 products.forEach((product) => {
-    productsHTML += `
+  productsHTML += `
         <div class="product-container">
           <div class="product-image-container">
             <img class="product-image" src="${product.image}">
@@ -49,13 +49,29 @@ document.querySelector('.js-products-grid').innerHTML = productsHTML;
 calculateCartQuantity();
 // Step 4: Add event listeners to the add to cart buttons
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
-    // We add a click event listener to each add to cart button
-    button.addEventListener('click', () => {
-      // We get the productId from the data attribute of the clicked button
-        const productId = button.dataset.productId;
-        // We call the addToCart function from the cart.js file to add the product to the cart with the selected quantity
-        addToCart(productId);
-        // We show the "Added to Cart" message by targeting the added-to-cart element inside the clicked product container and adding the "visible" class to it
-        calculateCartQuantity();         
-    });
+  // We add a click event listener to each add to cart button
+  button.addEventListener('click', () => {
+    // We get the productId from the data attribute of the clicked button
+    const productId = button.dataset.productId;
+    // We call the addToCart function from the cart.js file to add the product to the cart with the selected quantity
+    addToCart(productId);
+    // We show the "Added to Cart" message by targeting the added-to-cart element
+    const productContainer = button.closest('.product-container');
+    const addedMessage = productContainer.querySelector('.added-to-cart');
+    addedMessage.style.opacity = '1';
+
+    // Clear previous timeout if it exists
+    const previousTimeoutId = button.dataset.timeoutId;
+    if (previousTimeoutId) {
+      clearTimeout(previousTimeoutId);
+    }
+
+    const timeoutId = setTimeout(() => {
+      addedMessage.style.opacity = '0';
+    }, 2000);
+
+    button.dataset.timeoutId = timeoutId;
+
+    calculateCartQuantity();
+  });
 });
