@@ -119,16 +119,52 @@
   margin-left: 3px;
 }
 
+.product-quantity .update-quantity-link,
+.product-quantity .save-quantity-link {
+  display: inline-block;
+  color: #017cb6;
+  font-weight: 600;
+  margin-left: 8px;
+  padding: 5px 12px;
+  background-color: #f0f8ff;
+  border: 1px solid #cce5ff;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.product-quantity .update-quantity-link:hover,
+.product-quantity .save-quantity-link:hover {
+  background-color: #e0f0ff;
+  color: #0056b3;
+  border-color: #99ccff;
+}
+
+.product-quantity .save-quantity-link {
+  color: #0f7a3f;
+  background-color: #e6f7eb;
+  border-color: #b3e6c5;
+}
+
+.product-quantity .save-quantity-link:hover {
+  background-color: #d1f0db;
+  color: #0a522a;
+  border-color: #8ce0a8;
+}
+
 .product-quantity .delete-quantity-link {
+  display: inline-block;
   color: #d92525;
   font-weight: 600;
-  margin-left: 12px;
-  padding: 4px 10px;
+  margin-left: 8px;
+  padding: 5px 12px;
   background-color: #fff4f4;
   border: 1px solid #ffcccc;
   border-radius: 6px;
   text-decoration: none;
   transition: all 0.2s ease;
+  font-size: 14px;
 }
 
 .product-quantity .delete-quantity-link:hover {
