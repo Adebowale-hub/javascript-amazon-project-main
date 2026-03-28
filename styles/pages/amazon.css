@@ -1,5 +1,7 @@
 .main {
-  margin-top: 60px;
+  max-width: 1600px;
+  margin: 60px auto 0;
+  padding: 20px 40px;
 }
 
 .products-grid {
