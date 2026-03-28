@@ -119,6 +119,24 @@
   margin-left: 3px;
 }
 
+.product-quantity .delete-quantity-link {
+  color: #d92525;
+  font-weight: 600;
+  margin-left: 12px;
+  padding: 4px 10px;
+  background-color: #fff4f4;
+  border: 1px solid #ffcccc;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.product-quantity .delete-quantity-link:hover {
+  background-color: #ffe0e0;
+  color: #b01818;
+  border-color: #ff9999;
+}
+
 @media (max-width: 1000px) {
   .delivery-options {
     /* grid-column: 1 means this element will be placed
@@ -222,18 +240,22 @@
 }
 
 .save-quantity-link {
-    display: none; /* The save link is hidden initially */
+  display: none;
+  /* The save link is hidden initially */
 }
 
 .is-editing-quantity .quantity-input {
-    display: initial; /* Show input when in editing mode */
+  display: initial;
+  /* Show input when in editing mode */
 }
 
 .is-editing-quantity .save-quantity-link {
-    display: initial; /* Show save link when in editing mode */
+  display: initial;
+  /* Show save link when in editing mode */
 }
 
 .is-editing-quantity .quantity-display,
 .is-editing-quantity .update-quantity-link {
-    display: none; /* Hide quantity display and update link when in editing mode */
+  display: none;
+  /* Hide quantity display and update link when in editing mode */
 }
